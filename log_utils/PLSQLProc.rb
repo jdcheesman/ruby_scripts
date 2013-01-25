@@ -14,10 +14,24 @@ class PLSQLProc
 
     def add_call(elapsed, callparams)
         if elapsed > @worst
-            @params = callparams.chomp.strip
+            @params = clean_up_params(callparams)
             @worst = elapsed
         end
         @calls = @calls + 1
         @totaltime = @totaltime + elapsed
     end
+
+    def clean_up_params(pp)
+        localpp = pp.chomp.strip
+        localpp["---> INICIO PROCEDIMIENTO:"] = ""    if localpp =~ /^---> INICIO PROCEDIMIENTO:/
+        localpp["*** Inicio Procedimiento -->"] = ""  if localpp =~ /^*** Inicio Procedimiento -->/
+        localpp["prepararProc->"] = ""                if localpp =~ /^prepararProc->/
+        localpp["INICIO PROCEDIMIENTO -"] = ""        if localpp =~ /^INICIO PROCEDIMIENTO -/
+        localpp["--->INICIO PROCEDIMIENTO:"] = ""     if localpp =~ /^--->INICIO PROCEDIMIENTO:/
+        localpp["---> INICIO PROCEDIMIENTO "] = ""    if localpp =~ /^---> INICIO PROCEDIMIENTO/
+        localpp["Proceso:"] = ""                     if localpp =~ /^Proceso:/
+
+        localpp
+    end
+
 end

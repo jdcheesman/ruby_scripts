@@ -22,8 +22,9 @@ def procparser(infile, outfile)
     missing = Set[]
 
     lastmin = -1
+    linecounter = 0
     f.each_line do|line|
-
+        linecounter += 1
         # following if will need redoing in 2020. Not too concerned :)
         if line =~ /^201[3..9]/ and line =~ /AJPRequestHandler-ApplicationServerThread-/
             lineData = line.split(' ')
@@ -31,13 +32,16 @@ def procparser(infile, outfile)
             #09:23:15.552
             hours = stripLeadingZero(time[0]).to_i
             minutes = stripLeadingZero(time[1]).to_i
-            if minutes != lastmin
-                printf("%s\n", lineData[1])
-                lastmin = minutes
-            end
             sec_ms = time[2].split('.')
             sec = stripLeadingZero(sec_ms[0]).to_i
             ms = stripLeadingZero(sec_ms[1]).to_i
+
+            #send something to console to show we're working
+            if minutes != lastmin
+                printf("[%d]\t%s\n", linecounter, lineData[1])
+                lastmin = minutes
+            end
+
 
             normalisedTime = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (sec * 1000) + ms
             line[line.index(' ')] = "\t" if line =~ / /
@@ -53,13 +57,6 @@ def procparser(infile, outfile)
             if (slices[5].downcase =~ /inicio procedimiento/ or slices[5] =~ /\{call/ or slices[5] =~ /\{?=call/)
                 #printf("found start of key=%s\n", slices[5])
                 times[key] = normalisedTime
-                if slices[5] =~ /---> INICIO PROCEDIMIENTO:/
-                    slices[5]["---> INICIO PROCEDIMIENTO:"] = ""
-                elsif slices[5] =~ /^*** Inicio Procedimiento -->/
-                    slices[5]["*** Inicio Procedimiento -->"] = ""
-                elsif slices[5] =~ /prepararProc->/
-                    slices[5]["prepararProc->"] = ""
-                end
                 params[key] = slices[5]
             elsif (slices[5].downcase =~ /fin procedimiento/)
                 endTime = 0
@@ -103,11 +100,15 @@ def procparser(infile, outfile)
     end
     fout.close
 
-    print("Missing:\n")
-    missing.each do | key |
-        printf("%s\n", key)
+    if missing.empty?
+        print("\nAll procedures have start and end markers.\n")
+    else
+        print("\nFollowing procedures are missing end marker (no time calculated):\n")
+        missing.each do | key |
+            printf("%s\n", key)
+        end
     end
-
+    printf("%d lines processed.\n", linecounter)
 end
 
 #Expected log format:
