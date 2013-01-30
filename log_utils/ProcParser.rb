@@ -1,5 +1,7 @@
 require_relative 'PLSQLProc'
+require_relative 'LogError'
 require 'set'
+
 
 class ProcParser
     DATE_SLICE = 0 # not used
@@ -9,15 +11,21 @@ class ProcParser
     JAVA_ID_SLICE = 4
     PLSQL_SLICE = 5
 
-    BAD_RESULT_TIME_THRESHOLD = 5 * 1000
+    attr :filename
+    attr_accessor :allprocs
+    attr_accessor :errors
+    attr_accessor :errorcount
+    attr_accessor :nodename
 
 
-    attr :allprocs
-    attr :missing
 
-    def initialize()
+    def initialize(directory, filename)
+        directory = directory + "\\" if directory !~ /\\$/
+        @filename = directory + filename
+        @nodename = filename.sub(/\.log$/, "").chomp.strip
         @allprocs = Hash[]
-        @missing = Set[]
+        @errors = Set[]
+        @errorcount = 0
     end
 
     ########################################################
@@ -32,22 +40,25 @@ class ProcParser
     # * Single day logs (in decade 2010-2019)
     # * thread identified by "AJPRequestHandler-ApplicationServerThread-"
     ########################################################
-    def parse(infile)
-        f = File.open(infile, "r")
+    def parse()
+        f = File.open(@filename, "r")
         inicioProc_StartTime = Hash[]
         plSqlData = Hash[]
-        previousTime = -1 # used for console "doing something" message
-        linecounter = 0 # used for console "doing something" message
-
+        linecounter = 0
+        previouserror = LogError.new("", "", 1)
         f.each_line do|line|
             linecounter += 1
             if line =~ /^201[3..9]/ and line =~ /AJPRequestHandler-ApplicationServerThread-/
                 lineData = line.split(' ', 6)
                 normalisedTime = get_normalised_time(lineData[TIME_SLICE])
-                #send something to console to show we're working
-                if (normalisedTime - previousTime) > (60 * 60 * 1000)
-                    printf("[%d]\t%s\n", linecounter, lineData[TIME_SLICE])
-                    previousTime = normalisedTime
+
+                if line =~/\[ERROR\]/
+                    le = LogError.new(lineData[TIME_SLICE], lineData[PLSQL_SLICE], normalisedTime)
+                    if ! le.same?(previouserror)
+                        @errorcount += 1
+                        @errors.add(le)
+                    end
+                    previouserror = le
                 end
 
                 thread_java_id = lineData[THREAD_SLICE] + "#" + lineData[JAVA_ID_SLICE]
@@ -56,60 +67,18 @@ class ProcParser
                     plSqlData[thread_java_id] = lineData[PLSQL_SLICE]
                 elsif (lineData[PLSQL_SLICE].downcase =~ /fin procedimiento/)
                     if inicioProc_StartTime[thread_java_id] == nil
-                        @missing.add(lineData[JAVA_ID_SLICE])
+                        # experience shows following is never called, although is expected for transactions @ midnight
+                        printf("%s missing start marker @ [%s]\n", lineData[JAVA_ID_SLICE], lineData[TIME_SLICE])
                     else
-                        log_pl_sql(lineData[JAVA_ID_SLICE], plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]))
+                        log_pl_sql(lineData[JAVA_ID_SLICE], plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]), lineData[TIME_SLICE])
                     end
                 end
             end
         end
         f.close
-        printf("%d lines processed.\n\n", linecounter)
+        linecounter
     end
 
-    def createCSV(outfile)
-        fout = File.open(outfile, "w")
-        fout.write("Clase Java\tMetodo\tNum Llamadas\tTotal (ms)\tMedio (ms)\tPeor (ms)\tDatos Peor Llamada\n")
-        print("calls\ttotal\tavg\tworst\tbad\tname\n")
-        @allprocs.each_key do |key|
-            proc = @allprocs[key]
-            @missing.delete?(proc.name)
-            avg = proc.totaltime / proc.calls
-            slicedJava = /([a-zA-Z\.]+)\.([a-zA-Z]+)/.match(proc.name)
-            fout.write(slicedJava[1]) # class name
-            fout.write("\t")
-            fout.write(slicedJava[2]) # method
-            fout.write("\t")
-            fout.write(proc.calls)
-            fout.write("\t")
-            fout.write(proc.totaltime)
-            fout.write("\t")
-            fout.write(avg)
-            fout.write("\t")
-            fout.write(proc.worst)
-            fout.write("\t")
-            fout.write(proc.plSqlData)
-            fout.write("\n")
-            if avg > BAD_RESULT_TIME_THRESHOLD or proc.worst > BAD_RESULT_TIME_THRESHOLD
-                overThreshold = " !"
-            else
-                overThreshold = "  "
-            end
-            printf("%d\t%d\t%d\t%d\t%s\t%s\n", proc.calls, proc.totaltime, avg, proc.worst, overThreshold, proc.name)
-        end
-        fout.close
-    end
-
-    def show_missing()
-        if @missing.empty?
-            print("\nAll procedures have start and end markers.\n")
-        else
-            print("\nFollowing procedures are missing end marker (no time calculated):\n")
-            @missing.each do | key |
-                printf("%s\n", key)
-            end
-        end
-    end
 
     def get_normalised_time(string_time)
         # Expected: 09:23:15.552
@@ -130,10 +99,10 @@ class ProcParser
         p
     end
 
-    def log_pl_sql(java_id, plsql, endTime)
+    def log_pl_sql(java_id, plsql, endTime, time)
         # note thread id is NOT part of key for output data:
         p = get_pl_sql(java_id)
-        p.add_call(endTime, plsql)
+        p.add_call(endTime, plsql, time)
         @allprocs[java_id] = p
     end
 
