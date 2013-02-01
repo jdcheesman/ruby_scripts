@@ -24,7 +24,7 @@ class OutputWriter
         @filename = filename
     end
 
-    def write_xlsx(alldata, errordata)
+    def write_xlsx(alldata, errordata, calldata)
         SimpleXlsx::Serializer.new(@filename) do |doc|
             doc.add_sheet("DATOS") do |sheet|
                 set_titles_llamadas(sheet)
@@ -40,6 +40,14 @@ class OutputWriter
                     add_node_data_errores(key, errordata[key], sheet)
                 end
             end
+            doc.add_sheet("LLAMADAS") do |sheet|
+                set_titles_calls(sheet)
+                calldata.each_key do |key|
+                    printf("\nWriting calls: %s\n", key)
+                    add_node_data_calls(key, calldata[key], sheet)
+                end
+            end
+
         end
     end
 
@@ -106,6 +114,25 @@ class OutputWriter
                 log_error.java_method,
                 log_error.code,
                 log_error.description
+                ])
+        end
+    end
+
+    def set_titles_calls(sheet)
+        sheet.add_row(["Nodo",
+            "Hora",
+            "Llamadas",
+            "Errores"])
+    end
+
+    def add_node_data_calls(nodename, data, sheet)
+        data.each_key do |key|
+            call = data[key]
+            sheet.add_row([
+                nodename,
+                call.minute,
+                call.call_count,
+                call.error_count
                 ])
         end
     end

@@ -1,5 +1,6 @@
 require_relative 'PLSQLProc'
 require_relative 'LogError'
+require_relative 'Call'
 require 'set'
 
 
@@ -16,6 +17,7 @@ class ProcParser
     attr_accessor :errors
     attr_accessor :errorcount
     attr_accessor :nodename
+    attr_accessor :calls
 
 
 
@@ -26,6 +28,7 @@ class ProcParser
         @allprocs = Hash[]
         @errors = Array[]
         @errorcount = 0
+        @calls = Hash[]
     end
 
     ########################################################
@@ -46,10 +49,18 @@ class ProcParser
         plSqlData = Hash[]
         linecounter = 0
         previouserror = LogError.new("", "", "abc.def", 1)
+        hourminute = ""
         f.each_line do|line|
             linecounter += 1
             if line =~ /^201[3..9]/ and line =~ /AJPRequestHandler-ApplicationServerThread-/
                 lineData = line.split(' ', 6)
+                currentMinute = ProcParser.get_hour_minute(lineData[TIME_SLICE])
+                if currentMinute != hourminute
+                    hourminute = currentMinute
+                    call = Call.new(currentMinute)
+                else
+                    call = @calls[currentMinute]
+                end
                 normalisedTime = get_normalised_time(lineData[TIME_SLICE])
 
                 if line =~/\[ERROR\]/
@@ -62,6 +73,9 @@ class ProcParser
                     end
                     @errors << le
                     previouserror = le
+                    call.add_error()
+                else
+                    call.add_call()
                 end
                 # following logic assumes there are no overlapping PL/SQL calls in a given thread+method
                 thread_java_id = lineData[THREAD_SLICE] + "#" + lineData[JAVA_ID_SLICE]
@@ -78,6 +92,7 @@ class ProcParser
                         log_pl_sql(key, plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]), lineData[TIME_SLICE])
                     end
                 end
+                @calls[currentMinute] = call
             end
         end
         f.close
@@ -94,6 +109,23 @@ class ProcParser
         ms = time[4].to_i
         (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (sec * 1000) + ms
     end
+
+    def self.get_hour_minute(string_time)
+        # Expected: 09:23:15.552
+        time = /([0]?\d+):[0]?(\d+):[0]?(\d+)\.[0]?[0]?(\d+)/.match(string_time)
+        hours = time[1]
+        minutes = time[2].to_i
+        if minutes < 15
+            hours + ":00"
+        elsif minutes < 30
+            hours + ":15"
+        elsif minutes < 45
+            hours + ":30"
+        else
+            hours + ":45"
+        end
+    end
+
 
     def get_pl_sql(pl_sql_key)
         if @allprocs[pl_sql_key] == nil

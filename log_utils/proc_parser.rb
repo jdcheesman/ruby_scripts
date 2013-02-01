@@ -12,6 +12,7 @@ end
 
 alldata = Hash[]
 errordata = Hash[]
+calldata = Hash[]
 
 
 Dir.foreach(ARGV[0]) do |f|
@@ -24,12 +25,13 @@ Dir.foreach(ARGV[0]) do |f|
         printf("\t%d errors found, rate=%1.5f.\n", myParser.errorcount, errorRate)
         alldata[myParser.nodename] = myParser.allprocs
         errordata[myParser.nodename] = myParser.errors
+        calldata[myParser.nodename] = myParser.calls
     end
 
 end
 
 outputfilename = getfilename(ARGV[0])
 outputWriter = OutputWriter.new(outputfilename)
-outputWriter.write_xlsx(alldata, errordata)
+outputWriter.write_xlsx(alldata, errordata, calldata)
 
 printf("Result file:\n%s\n", outputfilename)

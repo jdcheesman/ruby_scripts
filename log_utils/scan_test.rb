@@ -1,3 +1,4 @@
+require_relative 'ProcParser'
 require_relative 'PLSQLProc'
 require 'rubygems'
 require 'simple_xlsx'
@@ -76,22 +77,15 @@ printf("1: %s\n\n", slicedJava[1])
 printf("2: %s\n\n", slicedJava[2])
 
 
-# m = /[0]?(\d+):[0]?(\d+):[0]?(\d+)\.[0]?[0]?(\d+)/.match(lineData[TIME_SLICE])
+data = "09:23:15.552"
+printf("Hour_minute: %s\n", ProcParser.get_hour_minute(data))
+data = "09:03:15.552"
+printf("Hour_minute: %s\n", ProcParser.get_hour_minute(data))
+data = "10:23:15.552"
+printf("Hour_minute: %s\n", ProcParser.get_hour_minute(data))
+data = "00:00:15.552"
+printf("Hour_minute: %s\n", ProcParser.get_hour_minute(data))
 
-# printf("0: %s\n", m[0])
-# printf("1: %s\n", m[1])
-# printf("2: %s\n", m[2])
-# printf("3: %s\n", m[3])
-# printf("4: %s\n", m[4])
-
-
-
-# data = "es.uned.portal.gaia.core.bd.sql.AlumnoDao.obtenerDatosAcademicos"
-
-# z = /([a-zA-Z\.]+)\.([a-zA-Z]+)/.match(data)
-# printf("0: %s\n", z[0])
-# printf("1: %s\n", z[1])
-# printf("1: %s\n", z[2])
 
 
  # SimpleXlsx::Serializer.new("test.xlsx") do |doc|
