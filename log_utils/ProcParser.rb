@@ -24,7 +24,7 @@ class ProcParser
         @filename = directory + filename
         @nodename = filename.sub(/\.log$/, "").chomp.strip
         @allprocs = Hash[]
-        @errors = Set[]
+        @errors = Array[]
         @errorcount = 0
     end
 
@@ -45,7 +45,7 @@ class ProcParser
         inicioProc_StartTime = Hash[]
         plSqlData = Hash[]
         linecounter = 0
-        previouserror = LogError.new("", "", 1)
+        previouserror = LogError.new("", "", "abc.def", 1)
         f.each_line do|line|
             linecounter += 1
             if line =~ /^201[3..9]/ and line =~ /AJPRequestHandler-ApplicationServerThread-/
@@ -53,14 +53,17 @@ class ProcParser
                 normalisedTime = get_normalised_time(lineData[TIME_SLICE])
 
                 if line =~/\[ERROR\]/
-                    le = LogError.new(lineData[TIME_SLICE], lineData[PLSQL_SLICE], normalisedTime)
-                    if ! le.same?(previouserror)
+                    le = LogError.new(lineData[TIME_SLICE], lineData[PLSQL_SLICE], lineData[JAVA_ID_SLICE], normalisedTime)
+                    if le.same?(previouserror)
+                        @errors.pop
+                        le.code = previouserror.code
+                    else
                         @errorcount += 1
-                        @errors.add(le)
                     end
+                    @errors << le
                     previouserror = le
                 end
-
+                # following logic assumes there are no overlapping PL/SQL calls in a given thread+method
                 thread_java_id = lineData[THREAD_SLICE] + "#" + lineData[JAVA_ID_SLICE]
                 if (lineData[PLSQL_SLICE].downcase =~ /inicio procedimiento/ or lineData[PLSQL_SLICE] =~ /\{call/ or lineData[PLSQL_SLICE] =~ /\{?=call/)
                     inicioProc_StartTime[thread_java_id] = normalisedTime
@@ -70,7 +73,9 @@ class ProcParser
                         # experience shows following is never called, although is expected for transactions @ midnight
                         printf("%s missing start marker @ [%s]\n", lineData[JAVA_ID_SLICE], lineData[TIME_SLICE])
                     else
-                        log_pl_sql(lineData[JAVA_ID_SLICE], plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]), lineData[TIME_SLICE])
+                        key = lineData[JAVA_ID_SLICE] + "#" + PLSQLProc.get_proc_name(PLSQLProc.clean_up_plSqlData(plSqlData[thread_java_id]))
+                        # log_pl_sql(lineData[JAVA_ID_SLICE], plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]), lineData[TIME_SLICE])
+                        log_pl_sql(key, plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]), lineData[TIME_SLICE])
                     end
                 end
             end
@@ -99,11 +104,11 @@ class ProcParser
         p
     end
 
-    def log_pl_sql(java_id, plsql, endTime, time)
+    def log_pl_sql(pl_sql_key, plsql, endTime, time)
         # note thread id is NOT part of key for output data:
-        p = get_pl_sql(java_id)
+        p = get_pl_sql(pl_sql_key)
         p.add_call(endTime, plsql, time)
-        @allprocs[java_id] = p
+        @allprocs[pl_sql_key] = p
     end
 
 

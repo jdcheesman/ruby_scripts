@@ -2,15 +2,17 @@ class LogError
     attr_accessor :time
     attr_accessor :code
     attr_accessor :description
-
+    attr_accessor :java_method
+    attr_accessor :java_class
     attr_accessor :normalisedTime
     IDENTICAL_TIME_DELTA = 5
 
-    def initialize(time, description, normalisedTime)
+    def initialize(time, description, java_id, normalisedTime)
         @time = time
         @description = description
         @normalisedTime = normalisedTime
         set_error_code(description)
+        set_java_id(java_id)
     end
 
     def set_error_code(description)
@@ -21,6 +23,12 @@ class LogError
         else
             @code = "-"
         end
+    end
+
+    def set_java_id(java_id)
+        slicedJava = /([a-zA-Z\.]+)\.([a-zA-Z]+)/.match(java_id)
+        @java_class = slicedJava[1]
+        @java_method = slicedJava[2]
     end
 
     def same?(other)

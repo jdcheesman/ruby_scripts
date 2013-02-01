@@ -1,3 +1,4 @@
+require_relative 'PLSQLProc'
 require 'rubygems'
 require 'simple_xlsx'
 
@@ -35,7 +36,44 @@ printf("PRE:[%s]\n", lineData[PLSQL_SLICE])
 
 cleanedup = clean_up_plSqlData(lineData[PLSQL_SLICE])
 
-print cleanedup
+printf("cleanedup:[%s]\n", cleanedup)
+
+
+
+
+data = "{?=call UNED.fcursoacad()}()"
+printf("Matching: %s\n", data)
+res = PLSQLProc.get_proc_name(data)
+printf("Res: %s\n\n", res)
+
+
+data = " {call MATRICULAS.PK_REC_MATRICULAS.Obtener_cartas_procesoacad(?,?)}(MP) ***"
+printf("Matching: %s\n", data)
+res = PLSQLProc.get_proc_name(data)
+printf("Res: %s\n\n", res)
+
+data = "AnADIR DOMICILIO CON TIPO USUARIO{call MATRICULAS.PK_AC_DATPER_DOMICILIOS.insertar_domicilio(?,?,?,?,?,?,?,?,?,?,?,?)}(F02 )"
+printf("Matching: %s\n", data)
+res = PLSQLProc.get_proc_name(data)
+printf("Res: %s\n\n", res)
+
+
+data = " UNED.PK_LISTGENERALES.dirapc_fac(03, 10)"
+printf("Matching: %s\n", data)
+res = PLSQLProc.get_proc_name(data)
+printf("Res: %s\n\n", res)
+
+
+
+data = "es.uned.portal.gaia.core.bd.sql.UsuarioAutenticadoDao.permisoEntidades===>#POSGRADO_PRO.PK_ACCESOS.permiso_entidades_mat"
+slicedJava = /([a-zA-Z\.]+)\.([a-zA-Z_]+)\W*?#.+/.match(data)
+printf("1: %s\n\n", slicedJava[1])
+printf("2: %s\n\n", slicedJava[2])
+
+data = "es.uned.portal.gaia.certificadospas.bd.sql.CertificadosDao.obtenerAsignaturas#POSGRADO_PRO.PK_REC_CERTIFICADOS.obtener_asignaturas"
+slicedJava = /([a-zA-Z\.]+)\.([a-zA-Z_]+)\W*?#.+/.match(data)
+printf("1: %s\n\n", slicedJava[1])
+printf("2: %s\n\n", slicedJava[2])
 
 
 # m = /[0]?(\d+):[0]?(\d+):[0]?(\d+)\.[0]?[0]?(\d+)/.match(lineData[TIME_SLICE])
@@ -56,12 +94,12 @@ print cleanedup
 # printf("1: %s\n", z[2])
 
 
- SimpleXlsx::Serializer.new("test.xlsx") do |doc|
-    doc.add_sheet("People") do |sheet|
-      sheet.add_row(%w{DoB Name Occupation})
-      sheet.add_row(["31-07-1912",
-                     "Milton Friedman",
-                     "Economist / Statistician"])
-    end
-  end
+ # SimpleXlsx::Serializer.new("test.xlsx") do |doc|
+ #    doc.add_sheet("People") do |sheet|
+ #      sheet.add_row(%w{DoB Name Occupation})
+ #      sheet.add_row(["31-07-1912",
+ #                     "Milton Friedman",
+ #                     "Economist / Statistician"])
+ #    end
+ #  end
 

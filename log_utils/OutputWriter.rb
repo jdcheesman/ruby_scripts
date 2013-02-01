@@ -47,6 +47,7 @@ class OutputWriter
         sheet.add_row(["Nodo",
             "Clase Java",
             "Metodo",
+            "Nombre proc",
             "Num Llamadas",
             "Total (ms)",
             "Medio (ms)",
@@ -58,23 +59,19 @@ class OutputWriter
             "Hora Mejor Llamada"])
     end
 
-    def set_titles_errores(sheet)
-        sheet.add_row(["Nodo",
-            "Hora",
-            "Codigo",
-            "Descripcion"])
-    end
 
     def add_node_data_llamadas(nodename, data, sheet)
         print("calls\ttotal\tavg\tbest\tworst\tname\n")
         data.each_key do |key|
             proc = data[key]
             avg = proc.totaltime / proc.calls
-            slicedJava = /([a-zA-Z\.]+)\.([a-zA-Z]+)/.match(proc.name)
+            dd = proc.name.split('#')[0]
+            slicedJava = /([a-zA-Z\.]+)\.([a-zA-Z_]+)/.match(dd)
             sheet.add_row([
                 nodename,
                 slicedJava[1], # class name
                 slicedJava[2], # method
+                PLSQLProc.get_proc_name(proc.plSqlData_worst),
                 proc.calls,
                 proc.totaltime,
                 avg,
@@ -86,9 +83,18 @@ class OutputWriter
                 proc.best_time
                 ])
             if avg > BAD_RESULT_TIME_THRESHOLD or proc.worst > BAD_RESULT_TIME_THRESHOLD
-                printf("%d\t%d\t%d\t%d\t%s\t%s\n", proc.calls, proc.totaltime, avg, proc.best, proc.worst, proc.name)
+                printf("%d\t%d\t%d\t%d\t%s\t%s.%s\n", proc.calls, proc.totaltime, avg, proc.best, proc.worst, slicedJava[1], slicedJava[2])
             end
         end
+    end
+
+    def set_titles_errores(sheet)
+        sheet.add_row(["Nodo",
+            "Hora",
+            "Clase Java",
+            "Metodo",
+            "Codigo",
+            "Descripcion"])
     end
 
     def add_node_data_errores(nodename, data, sheet)
@@ -96,6 +102,8 @@ class OutputWriter
             sheet.add_row([
                 nodename,
                 log_error.time,
+                log_error.java_class,
+                log_error.java_method,
                 log_error.code,
                 log_error.description
                 ])
