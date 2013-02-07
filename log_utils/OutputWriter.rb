@@ -122,7 +122,10 @@ class OutputWriter
         sheet.add_row(["Nodo",
             "Hora",
             "Llamadas",
-            "Errores"])
+            "Errores"
+            # ,
+            # "Usuarios"
+            ])
     end
 
     def add_node_data_calls(nodename, data, sheet)
@@ -133,6 +136,8 @@ class OutputWriter
                 call.minute,
                 call.call_count,
                 call.error_count
+                # ,
+                # call.portlet_count
                 ])
         end
     end
