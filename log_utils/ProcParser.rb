@@ -49,18 +49,14 @@ class ProcParser
         plSqlData = Hash[]
         linecounter = 0
         previouserror = LogError.new("", "", "abc.def", 1)
-        hourminute = ""
+        previous_line_time_rounded = ""
         f.each_line do|line|
             linecounter += 1
             if line =~ /^201[3..9]/ and line =~ /AJPRequestHandler-ApplicationServerThread-/
                 lineData = line.split(' ', 6)
-                currentMinute = ProcParser.get_hour_minute(lineData[TIME_SLICE])
-                if currentMinute != hourminute
-                    hourminute = currentMinute
-                    call = Call.new(currentMinute)
-                else
-                    call = @calls[currentMinute]
-                end
+                current_line_time_rounded = ProcParser.get_hour_minute(lineData[TIME_SLICE])
+                call = get_current_call(current_line_time_rounded, previous_line_time_rounded)
+                previous_line_time_rounded = current_line_time_rounded
                 normalisedTime = get_normalised_time(lineData[TIME_SLICE])
 
                 if line =~/\[ERROR\]/
@@ -74,9 +70,13 @@ class ProcParser
                     @errors << le
                     previouserror = le
                     call.add_error()
-                else
-                    call.add_call()
                 end
+                call.add_call()
+
+                if lineData[JAVA_ID_SLICE] =~/renderBody/ and lineData[PLSQL_SLICE].downcase =~ /inicio/
+                    call.add_portlet()
+                end
+
                 # following logic assumes there are no overlapping PL/SQL calls in a given thread+method
                 thread_java_id = lineData[THREAD_SLICE] + "#" + lineData[JAVA_ID_SLICE]
                 if (lineData[PLSQL_SLICE].downcase =~ /inicio procedimiento/ or lineData[PLSQL_SLICE] =~ /\{call/ or lineData[PLSQL_SLICE] =~ /\{?=call/)
@@ -92,7 +92,7 @@ class ProcParser
                         log_pl_sql(key, plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]), lineData[TIME_SLICE])
                     end
                 end
-                @calls[currentMinute] = call
+                @calls[current_line_time_rounded] = call
             end
         end
         f.close
@@ -143,6 +143,12 @@ class ProcParser
         @allprocs[pl_sql_key] = p
     end
 
-
+    def get_current_call(current_line_time_rounded, previous_line_time_rounded)
+        if current_line_time_rounded != previous_line_time_rounded
+            call = Call.new(current_line_time_rounded)
+        else
+            call = @calls[current_line_time_rounded]
+        end
+    end
 
 end
