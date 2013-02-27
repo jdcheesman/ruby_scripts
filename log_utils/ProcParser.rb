@@ -18,6 +18,8 @@ class ProcParser
     attr_accessor :errorcount
     attr_accessor :nodename
     attr_accessor :calls
+    attr_accessor :missing
+    attr_accessor :date
 
 
 
@@ -29,6 +31,7 @@ class ProcParser
         @errors = Array[]
         @errorcount = 0
         @calls = Hash[]
+        @missing = Set.new
     end
 
     ########################################################
@@ -50,10 +53,16 @@ class ProcParser
         linecounter = 0
         previouserror = LogError.new("", "", "abc.def", 1)
         previous_line_time_rounded = ""
+        last_date = "START"
         f.each_line do|line|
             linecounter += 1
             if line =~ /^201[3..9]/ and line =~ /AJPRequestHandler-ApplicationServerThread-/
                 lineData = line.split(' ', 6)
+                @date = lineData[DATE_SLICE]
+                if !(last_date == "START") & !(@date == last_date)
+                    printf("Log file spans various dates (only last date used in ouput): %s != %s\n", last_date, @date)
+                end
+                last_date = @date
                 current_line_time_rounded = ProcParser.get_hour_minute(lineData[TIME_SLICE])
                 call = get_current_call(current_line_time_rounded, previous_line_time_rounded)
                 previous_line_time_rounded = current_line_time_rounded
@@ -82,12 +91,14 @@ class ProcParser
                 if (lineData[PLSQL_SLICE].downcase =~ /inicio procedimiento/ or lineData[PLSQL_SLICE] =~ /\{call/ or lineData[PLSQL_SLICE] =~ /\{?=call/)
                     inicioProc_StartTime[thread_java_id] = normalisedTime
                     plSqlData[thread_java_id] = lineData[PLSQL_SLICE]
+                    @missing.add(get_pl_sql_key(lineData, plSqlData, thread_java_id))
                 elsif (lineData[PLSQL_SLICE].downcase =~ /fin procedimiento/)
                     if inicioProc_StartTime[thread_java_id] == nil
                         # experience shows following is never called, although is expected for transactions @ midnight
                         printf("%s missing start marker @ [%s]\n", lineData[JAVA_ID_SLICE], lineData[TIME_SLICE])
                     else
-                        key = lineData[JAVA_ID_SLICE] + "#" + PLSQLProc.get_proc_name(PLSQLProc.clean_up_plSqlData(plSqlData[thread_java_id]))
+                        key = get_pl_sql_key(lineData, plSqlData, thread_java_id)
+                        @missing.delete(key)
                         # log_pl_sql(lineData[JAVA_ID_SLICE], plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]), lineData[TIME_SLICE])
                         log_pl_sql(key, plSqlData[thread_java_id], (normalisedTime - inicioProc_StartTime[thread_java_id]), lineData[TIME_SLICE])
                     end
@@ -99,6 +110,9 @@ class ProcParser
         linecounter
     end
 
+    def get_pl_sql_key(lineData, plSqlData, thread_java_id)
+        lineData[JAVA_ID_SLICE] + "#" + PLSQLProc.get_proc_name(PLSQLProc.clean_up_plSqlData(plSqlData[thread_java_id]))
+    end
 
     def get_normalised_time(string_time)
         # Expected: 09:23:15.552

@@ -18,13 +18,15 @@ class OutputWriter
     BAD_RESULT_TIME_THRESHOLD = 5 * 1000
 
     attr :filename
+    attr :filedate
 
 
-    def initialize(filename)
+    def initialize(filename, filedate)
         @filename = filename
+        @filedate = filedate
     end
 
-    def write_xlsx(alldata, errordata, calldata)
+    def write_xlsx(alldata, errordata, calldata, missingdata)
         SimpleXlsx::Serializer.new(@filename) do |doc|
             doc.add_sheet("DATOS") do |sheet|
                 set_titles_llamadas(sheet)
@@ -47,7 +49,13 @@ class OutputWriter
                     add_node_data_calls(key, calldata[key], sheet)
                 end
             end
-
+            doc.add_sheet("MALFORMADO") do |sheet|
+                set_titles_missing(sheet)
+                missingdata.each_key do |key|
+                    printf("\nWriting calls: %s\n", key)
+                    add_node_data_missing(key, missingdata[key], sheet)
+                end
+            end
         end
     end
 
@@ -64,7 +72,8 @@ class OutputWriter
             "Datos Peor Llamada",
             "Hora Peor Llamada",
             "Datos Mejor Llamada",
-            "Hora Mejor Llamada"])
+            "Hora Mejor Llamada",
+            "Fecha"])
     end
 
 
@@ -88,12 +97,15 @@ class OutputWriter
                 proc.plSqlData_worst,
                 proc.worst_time,
                 proc.plSqlData_best,
-                proc.best_time
+                proc.best_time,
+                @filedate
                 ])
             if avg > BAD_RESULT_TIME_THRESHOLD or proc.worst > BAD_RESULT_TIME_THRESHOLD
                 printf("%d\t%d\t%d\t%d\t%s\t%s.%s\n", proc.calls, proc.totaltime, avg, proc.best, proc.worst, slicedJava[1], slicedJava[2])
             end
         end
+
+
     end
 
     def set_titles_errores(sheet)
@@ -102,7 +114,8 @@ class OutputWriter
             "Clase Java",
             "Metodo",
             "Codigo",
-            "Descripcion"])
+            "Descripcion",
+            "Fecha"])
     end
 
     def add_node_data_errores(nodename, data, sheet)
@@ -113,7 +126,8 @@ class OutputWriter
                 log_error.java_class,
                 log_error.java_method,
                 log_error.code,
-                log_error.description
+                log_error.description,
+                @filedate
                 ])
         end
     end
@@ -122,7 +136,8 @@ class OutputWriter
         sheet.add_row(["Nodo",
             "Hora",
             "Llamadas",
-            "Errores"
+            "Errores",
+            "Fecha"
             # ,
             # "Usuarios"
             ])
@@ -135,10 +150,38 @@ class OutputWriter
                 nodename,
                 call.minute,
                 call.call_count,
-                call.error_count
+                call.error_count,
+                @filedate
                 # ,
                 # call.portlet_count
                 ])
         end
     end
+
+
+    def set_titles_missing(sheet)
+        sheet.add_row(["Nodo",
+            "Clase Java",
+            "Metodo",
+            "PL/SQL",
+            "Fecha"])
+    end
+
+    def add_node_data_missing(nodename, data, sheet)
+        data.each do |log_missing|
+            text = log_missing.split('#')
+            java_method = text[0].split('.')[-1]
+            java_class = text[0]
+            java_class["." + java_method] = ""
+            java_method["===>"] = ""
+            sheet.add_row([
+                nodename,
+                java_class,
+                java_method,
+                text[1],
+                @filedate
+                ])
+        end
+    end
+
 end

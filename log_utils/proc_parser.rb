@@ -13,11 +13,14 @@ end
 alldata = Hash[]
 errordata = Hash[]
 calldata = Hash[]
+missingdata = Hash[]
 
+filedate = "START"
 
 Dir.foreach(ARGV[0]) do |f|
 
     if f =~ /\.log$/
+        printf("Processing: %s\n", f)
         myParser = ProcParser.new(ARGV[0], f)
         numLines = myParser.parse()
         printf("\t%d lines processed.\n", numLines)
@@ -26,12 +29,17 @@ Dir.foreach(ARGV[0]) do |f|
         alldata[myParser.nodename] = myParser.allprocs
         errordata[myParser.nodename] = myParser.errors
         calldata[myParser.nodename] = myParser.calls
+        missingdata[myParser.nodename] = myParser.missing
+        if !(filedate == "START") & !(filedate == myParser.date)
+            printf("Log files spans various dates (only last date used in ouput): %s != %s\n", filedate, myParser.date)
+        end
+        filedate =myParser.date
     end
 
 end
 
 outputfilename = getfilename(ARGV[0])
-outputWriter = OutputWriter.new(outputfilename)
-outputWriter.write_xlsx(alldata, errordata, calldata)
+outputWriter = OutputWriter.new(outputfilename, filedate)
+outputWriter.write_xlsx(alldata, errordata, calldata, missingdata)
 
 printf("Result file:\n%s\n", outputfilename)
