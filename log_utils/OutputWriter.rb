@@ -19,14 +19,15 @@ class OutputWriter
 
     attr :filename
     attr :filedate
-
+    attr :worst_thread
 
     def initialize(filename, filedate)
         @filename = filename
         @filedate = filedate
+        @worst_thread = Hash[]
     end
 
-    def write_xlsx(alldata, errordata, calldata, missingdata)
+    def write_xlsx(alldata, errordata, calldata, missingdata, session_threads)
         SimpleXlsx::Serializer.new(@filename) do |doc|
             doc.add_sheet("DATOS") do |sheet|
                 set_titles_llamadas(sheet)
@@ -52,9 +53,19 @@ class OutputWriter
             doc.add_sheet("MALFORMADO") do |sheet|
                 set_titles_missing(sheet)
                 missingdata.each_key do |key|
-                    printf("\nWriting calls: %s\n", key)
+                    printf("\nWriting malformado: %s\n", key)
                     add_node_data_missing(key, missingdata[key], sheet)
                 end
+            end
+            doc.add_sheet("HILOS") do | sheet |
+                set_titles_hilos(sheet)
+                session_threads.each_key do | key |
+                    add_node_data_hilos(key, session_threads[key], sheet)
+                end
+            end
+            doc.add_sheet("PEORES_HILOS") do | sheet |
+                set_titles_peores(sheet)
+                add_node_data_peores(sheet)
             end
         end
     end
@@ -137,23 +148,24 @@ class OutputWriter
             "Hora",
             "Llamadas",
             "Errores",
+            "Tiempo total",
+            "Promedio",
             "Fecha"
-            # ,
-            # "Usuarios"
             ])
     end
 
     def add_node_data_calls(nodename, data, sheet)
         data.each_key do |key|
             call = data[key]
+            promedio = (call.total_time*1.0) / (call.call_count*1.0)
             sheet.add_row([
                 nodename,
                 call.minute,
                 call.call_count,
                 call.error_count,
+                call.total_time,
+                promedio,
                 @filedate
-                # ,
-                # call.portlet_count
                 ])
         end
     end
@@ -183,5 +195,68 @@ class OutputWriter
                 ])
         end
     end
+
+    def set_titles_hilos(sheet)
+        sheet.add_row(["Nodo",
+            "Clase Java",
+            "Inicio",
+            "Fin",
+            "Elapsed",
+            "Fecha"])
+    end
+
+    def add_node_data_hilos(nodename, data, sheet)
+        worst_thread_time = Hash[]
+        data.each_key do |key|
+            data[key].each do | session_thread |
+                elapsed = session_thread.elapsed
+                if elapsed > 0
+                    sheet.add_row([
+                        nodename,
+                        session_thread.id,
+                        session_thread.real_start_time,
+                        session_thread.real_end_time[-1],
+                        elapsed,
+                        @filedate
+                    ])
+                    if worst_thread_time[session_thread.id] == nil or
+                        worst_thread_time[session_thread.id] < elapsed
+                        worst_thread_time[session_thread.id] = elapsed
+                        @worst_thread[session_thread.id] = session_thread
+                    end
+                end
+            end
+        end
+    end
+
+    def set_titles_peores(sheet)
+        sheet.add_row([
+            "Portlet",
+            "Clase",
+            "Msg",
+            "Time",
+            "Total elapsed",
+            "Fecha"])
+    end
+
+    def add_node_data_peores(sheet)
+        @worst_thread.each_key do |portlet|
+            counter = 0
+            thread = @worst_thread[portlet]
+            thread.msgs.each do | msg |
+                thread.javas[counter]["es.uned.portal.gaia."] = ""
+                thread.javas[counter]["===>"] = ""
+                sheet.add_row([
+                    portlet,
+                    thread.javas[counter],
+                    msg,
+                    thread.real_end_time[counter],
+                    thread.elapsed,
+                    @filedate])
+                counter += 1
+            end
+        end
+    end
+
 
 end
