@@ -19,3 +19,7 @@ doc/
 
 testdata/
 
+config.yaml
+
+ruby/
+
