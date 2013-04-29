@@ -21,17 +21,24 @@ class MyProc
         if elapsed > @worst
             @plSqlData_worst = callplSqlData
             @worst = elapsed
-            @worst_time = time
+            @worst_time = clean_time(time)
             printf("New worst [%s] [%d]\n", @name, elapsed)
         end
         if elapsed < @best
             @plSqlData_best = callplSqlData
             @best = elapsed
-            @best_time = time
+            @best_time = clean_time(time)
         end
 
         @calls = @calls + 1
         @totaltime = @totaltime + elapsed
+    end
+
+
+    def clean_time(time)
+        #"2013-04-12 00:10:17 +0200"
+        time_split = time.split(' ');
+        time_split[0] + ' ' + time_split[1]
     end
 
     def to_json

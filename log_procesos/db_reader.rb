@@ -38,7 +38,7 @@ config = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yaml'))
 
 
 query = "select /*+ index(fec_ini IDX_LOGPROC_FECINI ) */  " +
-    "A.PROCEDIMIENTO, A.FEC_INI, A.DURACION, " +
+    "A.PROCEDIMIENTO, to_char(A.FEC_INI), A.DURACION, " +
     "A.CAMPO_ID || '=' || A.VALOR_ID || '#' || A.PARAMETROS_E || '#' || A.PARAMETROS_S parametros, " +
     "A.ERRCODE, A.LITERR, A.TIPOERR " +
     "from POSGRADO_PRO.log_procesos a " +
