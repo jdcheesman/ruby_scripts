@@ -1,0 +1,799 @@
+
+                                                     CPU      Elapsd
+  Buffer Gets    Executions  Gets per Exec  %Total Time (s)  Time (s) Hash Value
+--------------- ------------ -------------- ------ -------- --------- ----------
+    801,591,135           15   53,439,409.0   14.2  4161.98   4091.56 1432630274
+Module: w3wp.exe
+SELECT /*+choose*/ DISTINCT     DevolverCodAsignaturas(AE.TIPO_E
+STUDIOS,PR.ID_EXAMEN) COD_ASIGS,    PE.PLANEXA,PE.LIT_PLANEXA,PR
+.CONVOCATORIA, MD.COD_GRUPO_MOD , PR.SEMANA,     MD.NOMBRE_MODEL
+O, PR.ID_EXAMEN, EX.LITERAL_EXAMEN,     CALCULAFECHAPRUEBA(PE.PL
+ANEXA, PR.CURSO, PR.CONVOCATORIA,PR.SEMANA, PR.DIA,PE.TIPO_ESTUD
+
+    401,588,072            2  200,794,036.0    7.1  3087.42   3053.33 2659649938
+DECLARE job BINARY_INTEGER := :job; next_date DATE := :mydate;
+broken BOOLEAN := FALSE; BEGIN PK_UNIDIS.CargaTmpUnidisTrib('201
+3','J', '01');  :mydate := next_date; IF broken THEN :b := 1; EL
+SE :b := 0; END IF; END;
+
+    294,163,700        7,821       37,612.0    5.2  1031.32   1015.51 2027148008
+Module: OC4J_Guias.default_island.1
+SELECT DISTINCT TIPO_ESTUDIOS||ASIGNA AS ASIGNA, TIPO_ESTUDIOS,
+UPPER(NOMASI) AS NOMASI, CARAC, CREDI, TIPO FROM UNED.GUIAS_POS_
+ASIGNATURAS WHERE ASIGNA = SUBSTR(:B1 ,3,8) AND TIPO_ESTUDIOS=SU
+BSTR(:B1 ,0,2)
+
+    293,259,256          447      656,061.0    5.2  2558.00   2540.99 1374102812
+BEGIN POSGRADO_PRO.PK_GPOS_ASIGNATURAS.calcular_reconocimientos_
+autom(:1,:2,:3); END;
+
+    288,787,551        2,379      121,390.3    5.1  2220.68   2186.58 3002188170
+Module: OC4J_Grados.first_island.1
+SELECT MA.ID_MATRICULA, MA.CURSO, MA.CONVO_MAT, MCV.NOM_CONVO_MA
+T LIT_CONVO_MAT, MA.DNI, MA.UNIV_ORIGEN, MA.TIPO_ESTUDIOS, MA.CO
+D_ASIG, MA.UNIV_ASIG, MA.ESTADO, EA.NOM_ESTADO, GV.CURSO_OFER, P
+OSGRADO_PRO.PK_GPOS_REC_ASIGNATURAS.MIN_COD_ALTERNATIVA(MT.TIPO_
+ESTUDIOS,MT.COD_VIA_ESTUDIO, MA.UNIV_ORIGEN,MA.TIPO_ESTUDIOS,MA.
+
+    200,185,876       23,104        8,664.6    3.5  1651.36   1626.10  641582793
+Module: OC4J_Grados.third_island.1
+SELECT COUNT(*) AS VEZ FROM MATRICULA_ASIGNATURAS MA , MATRICULA
+S.ESTADOS_ASIG EA WHERE MA.DNI = :B5 AND MA.CURSO <:B4 AND MA.CO
+D_ASIG = :B3 AND MA.TIPO_ESTUDIOS = :B2 AND MA.UNIV_ORIGEN = :B1
+ AND EA.COD_ESTADO = MA.ESTADO AND EA.MATRICULA_ACTIVA = 'S' AND
+ ((EA.IMPARTE_DOCENCIA='S' AND EXISTS (SELECT NULL FROM MATRI M
+
+    163,514,590        2,422       67,512.2    2.9   728.90    717.44  487677691
+Module: dllhost.exe
+SELECT * FROM BECAS_PRO.V_GRADO_Y_POSGRADO WHERE CURSO = :B4 AND
+ DNI = :B3 AND TIPO_ESTUDIOS = :B2 AND PROGRAMA = :B1
+
+    135,352,432          892      151,740.4    2.4   636.58    627.63 3812641379
+SELECT '01' AS TIPO_REQ, TR.NOM_TIPO_REQ, 'DEBERÁ HACER EFECTIVO
+, con arreglo a la normativa vigente sobre precios por servicios
+ académicos, el importe de ' || CANTIDAD || ' euros detallado en
+SQL ordered by Gets for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Buffer Gets Threshold:     10000
+-> Note that resources reported for PL/SQL includes the resources used by
+   all SQL statements called within the PL/SQL code.  As individual SQL
+   statements are also reported, it is possible and valid for the summed
+   total % to exceed 100
+
+                                                     CPU      Elapsd
+  Buffer Gets    Executions  Gets per Exec  %Total Time (s)  Time (s) Hash Value
+--------------- ------------ -------------- ------ -------- --------- ----------
+ la Carta de Pago adjunta.' AS LITERAL, CANTIDAD AS VALOR_ASOCIA
+DO FROM (SELECT SUM (CANTIDAD) AS CANTIDAD FROM MATRICULAS.PAGOS
+
+    122,943,767          231      532,224.1    2.2   603.35    593.04 3731816516
+Module: dllhost.exe
+SELECT A.*, B.LIT_ESTADO AS LIT_ESTADO, A.TIPO_ESTUDIOS || '-' |
+| A.PROGRAMA AS CODIGO, 'S' AS MODULAR_SN, C.NOMBRE_PROGRAMA AS
+LITERAL, C.NOMBRE_PROGRAMA AS NOMBRE_PROGRAMA, 'Programa Modular
+' AS CATEGORIA FROM MATRICULAS A, DATPER DP, ZX_ESTADO_MATRICULA
+S B , EDUCAPER_PRO.V_EP_PROGRAMAS_OFERTADOS C WHERE DP.DOCUMENTO
+
+    114,075,460   37,715,051            3.0    2.0  1102.47    970.08 1743952982
+Module: OC4J_Guias.default_island.1
+SELECT 'S' FROM PERSONAS_FUNCION WHERE ID_PF = :B3 AND NVL(CURSO
+,:B2 ) = :B2 AND NVL(FEC_COMIENZO,TO_DATE('01/01/1001','DD/MM/YY
+YY')) <= :B1 AND NVL(FEC_CESE,TO_DATE('31/12/2999','DD/MM/YYYY')
+) >= :B1
+
+    109,506,600        3,167       34,577.4    1.9   678.89    668.65 2479791109
+SELECT DISTINCT (AD.GRUPO_RECONOCIMIENTO) GRUPO_NEW FROM POSGRAD
+O_PRO.ASIGNATURAS_RECONOCIDAS_D AD, UNED.GPOS_VIAS_ESTUDIO VE, U
+NED.GPOS_VIAS_ASIG VA WHERE AD.DNI= :B4 AND AD.GRUPO_RECONOCIMIE
+NTO>=:B3 AND AD.UNIV_ORIGEN=VA.UNIV_ORIGEN AND AD.TIPO_ESTUDIOS=
+VA.TIPO_ESTUDIOS_ASIG AND AD.COD_ASIG=VA.COD_ASIG AND AD.CREDITO
+
+    109,295,263        3,847       28,410.5    1.9  1121.76   1109.98  558638120
+Module: dllhost.exe
+SELECT VRF.* , DECODE(VRF.COD_TIPO_ORIGEN, '001', ( SELECT GA.CR
+EDITOS FROM UNED.GPOS_ASIGNATURAS GA WHERE GA.UNIV_ORIGEN = SUBS
+TR(VRF.COD_VALOR, 1, 3) AND GA.TIPO_ESTUDIOS =SUBSTR(VRF.COD_VAL
+OR, 4, 2) AND GA.COD_ASIG = SUBSTR(VRF.COD_VALOR, 6, 6)), NULL)
+AS CREDITOS_SUPERA , CAR2.NOTA_NUM AS CALIF, CAR2.NOTA_ALF AS CA
+
+     88,205,016       19,822        4,449.9    1.6   368.84    380.04 2960788332
+SELECT DISTINCT 'S' FROM MATRI M, MATRICULA_ASIGNATURAS MA, MATR
+ICULAS.ESTADOS_ASIG EA WHERE M.CURSO = :B6 AND M.DNI = :B5 AND M
+.CONVO_MAT = :B4 AND NVL(M.ESTADO,'_') <> 'A' AND MA.CURSO = M.C
+URSO AND MA.CONVO_MAT = M.CONVO_MAT AND MA.DNI = M.DNI AND MA.TI
+PO_ESTUDIOS = :B3 AND MA.UNIV_ORIGEN = :B2 AND MA.COD_ASIG = :B1
+
+     85,130,648       57,612        1,477.7    1.5   574.37    565.40 2277346229
+Module: OC4J_Grados.third_island.1
+SELECT ARD.ROWID AS FILA, NOTA_ALF, NOTA_NUM, NVL(NOTA_NUM , (SE
+LECT NOTA_NUM_EQUIVALENTE FROM UNED.NOTAS_ALF NA WHERE NA.NOTA_A
+LF = ARD.NOTA_ALF ) ) AS NOTA_NUM_EQUIV FROM POSGRADO_PRO.ASIGNA
+TURAS_RECONOCIDAS_D ARD WHERE ARD.DNI= :B4 AND ARD.UNIV_ORIGEN=
+:B3 AND ARD.TIPO_ESTUDIOS= :B2 AND ARD.COD_ASIG= :B1 ORDER BY NO
+
+     80,004,217        4,204       19,030.5    1.4   624.65    617.12  346849955
+Module: dllhost.exe
+SQL ordered by Gets for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Buffer Gets Threshold:     10000
+-> Note that resources reported for PL/SQL includes the resources used by
+   all SQL statements called within the PL/SQL code.  As individual SQL
+   statements are also reported, it is possible and valid for the summed
+   total % to exceed 100
+
+                                                     CPU      Elapsd
+  Buffer Gets    Executions  Gets per Exec  %Total Time (s)  Time (s) Hash Value
+--------------- ------------ -------------- ------ -------- --------- ----------
+SELECT 'S' FROM POSGRADO_PRO.ASIGS_EXP_CALIF C WHERE C.CURSO = N
+VL(:B5 , C.CURSO) AND C.DNI = :B4 AND C.UNIV_ORIGEN = '028' AND
+C.UNIV_ASIG = :B3 AND C.TIPO_ESTUDIOS_ASIG = :B2 AND C.COD_ASIG
+
+          -------------------------------------------------------------
+SQL ordered by Reads for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Disk Reads Threshold:      1000
+
+                                                     CPU      Elapsd
+ Physical Reads  Executions  Reads per Exec %Total Time (s)  Time (s) Hash Value
+--------------- ------------ -------------- ------ -------- --------- ----------
+        562,282           56       10,040.8   18.5    77.79     85.40 3925399801
+Module: w3wp.exe
+begin EVACAL.NUM_ALUS_MATR.GEN_ESTADS_ASIGS_NEW_2(P_VARS=>:P_VAR
+S, P_VARS_COND=>:P_VARS_COND, P_TIPO=>:P_TIPO, P_CURSOR=>:P_CURS
+OR, P_RESULTADO=>:P_RESULTADO); end;
+
+        327,504           16       20,469.0   10.8    59.94     64.54 1081410773
+Module: dllhost.exe
+UPDATE WEB_PAGOS SET FEC_PAGO=:B8 , TIPO_TRAN=:B7 , RESUL_TRAN=:
+B6 , CODIGO_TRAN=:B5 , ID_TRAN=:B4 , CODERROR_TRAN=:B3 , DESCERR
+OR_TRAN=SUBSTR(:B2 ,1,50) WHERE NUM_CONTROL=:B1
+
+        327,504           19       17,237.1   10.8    59.96     64.55 4172020705
+Module: dllhost.exe
+BEGIN REVIMATRI.PK_WEB_PAGOS.UPDATE_WEB_PAGOS( :1, :2, :3, :4, :
+5, :6, :7, :8 ); END;
+
+        327,498           10       32,749.8   10.8    58.67     62.26 3064457225
+Module: dllhost.exe
+SELECT ID_PAGO FROM PAGOS WHERE DOMICILIADO = '1' AND PAGADO = '
+0' AND ROWNUM < 2 AND DNI || CURSO || TIPO_ESTUDIOS || PLAN || C
+ONCEPTO IN (SELECT DNI || CURSO || TIPO_ESTUDIOS || PLAN || CONC
+EPTO FROM PAGOS WHERE ID_PAGO = :B1 AND DOMICILIADO = '2')
+
+        192,595            3       64,198.3    6.3    36.43     45.99 2392410464
+Module: TOAD 11.6.0.43
+Select /*+ ALL_ROWS */  NAME, TYPE, REFERENCED_OWNER, REFERENCED
+_NAME, REFERENCED_TYPE, REFERENCED_LINK_NAME from   SYS.ALL_DEPE
+NDENCIES where  OWNER = :own and    OWNER || NAME || TYPE <> REF
+ERENCED_OWNER || REFERENCED_NAME || TYPE and   TYPE in ('FUNCTIO
+N','PACKAGE','PACKAGE BODY','TABLE','VIEW')
+
+        102,237            4       25,559.3    3.4    10.51     10.85 4105578481
+Module: w3wp.exe
+select count(*) as RESULTADO from (select a.TIPO_ESTUDIOS_MATR||
+a.COD_ASIG as "ID ASIG.",a.ASIGNATURA,a.CREDITOS,a.TIPO_ESTUDIOS
+_MATR||a.COD_PROGRAMA as TECP,a.PROGRAMA,ESTUDIOS,CURSO,
+                     sum(a.MAT_AC) as ACTIVAS,
+           sum(a.MAT_RC) as RECONOCIDAS,
+
+        102,087            4       25,521.8    3.4    11.07     11.05  777915678
+Module: w3wp.exe
+select count(*) as RESULTADO from (select a.TIPO_ESTUDIOS_MATR||
+a.COD_ASIG as "ID ASIG.",a.ASIGNATURA,a.CREDITOS,a.TIPO_ESTUDIOS
+_MATR||a.COD_PROGRAMA as TECP,a.PROGRAMA,ESTUDIOS,CURSO,
+                     sum(a.MAT_AC) as ACTIVAS,
+           sum(a.MAT_RC) as RECONOCIDAS,
+
+        102,024            4       25,506.0    3.4    11.22     11.02  652134880
+Module: w3wp.exe
+select count(*) as RESULTADO from (select a.TIPO_ESTUDIOS_MATR||
+a.COD_ASIG as "ID ASIG.",a.ASIGNATURA,a.CREDITOS,a.TIPO_ESTUDIOS
+_MATR||a.COD_PROGRAMA as TECP,a.PROGRAMA,ESTUDIOS,CURSO,
+                     sum(a.MAT_AC) as ACTIVAS,
+SQL ordered by Reads for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Disk Reads Threshold:      1000
+
+                                                     CPU      Elapsd
+ Physical Reads  Executions  Reads per Exec %Total Time (s)  Time (s) Hash Value
+--------------- ------------ -------------- ------ -------- --------- ----------
+           sum(a.MAT_RC) as RECONOCIDAS,
+
+        101,993            4       25,498.3    3.4    10.61     10.59 3688211053
+Module: w3wp.exe
+select count(*) as RESULTADO from (select a.TIPO_ESTUDIOS_MATR||
+a.COD_ASIG as "ID ASIG.",a.ASIGNATURA,a.CREDITOS,a.TIPO_ESTUDIOS
+_MATR||a.COD_PROGRAMA as TECP,a.PROGRAMA,ESTUDIOS,CURSO,
+                     sum(a.MAT_AC) as ACTIVAS,
+           sum(a.MAT_RC) as RECONOCIDAS,
+
+        101,902            4       25,475.5    3.4    10.58     10.56 2756598300
+Module: w3wp.exe
+select count(*) as RESULTADO from (select a.TIPO_ESTUDIOS_MATR||
+a.COD_ASIG as "ID ASIG.",a.ASIGNATURA,a.CREDITOS,a.TIPO_ESTUDIOS
+_MATR||a.COD_PROGRAMA as TECP,a.PROGRAMA,ESTUDIOS,CURSO,
+                     sum(a.MAT_AC) as ACTIVAS,
+           sum(a.MAT_RC) as RECONOCIDAS,
+
+         85,917            1       85,917.0    2.8    72.27     71.31 2765671841
+Module: TOAD 10.6.0.42
+SELECT '2012',A.UNIV_ASIG,A.TIPO_ESTUDIOS_ASIG, A.COD_ASIG,B.CUA
+TRI,B.convo_mat, count (A.DNI) FROM MATR_ASIGS_BASE_EEES a, UNED
+.GPOS_ASIG_CURSO b WHERE  A.CURSO = B.CURSO -- AND  NVL(A.CONVO_
+MAT,'00') = B.CONVO_MAT  AND A.UNIV_ASIG = B.UNIV_ORIGEN  AND A.
+TIPO_ESTUDIOS_ASIG = B.TIPO_ESTUDIOS  AND A.COD_ASIG = B.COD_ASI
+
+         85,907            1       85,907.0    2.8    58.23     57.87 2125871028
+Module: TOAD 10.6.0.42
+SELECT '2012',A.UNIV_ASIG,A.TIPO_ESTUDIOS_ASIG, A.COD_ASIG,B.CUA
+TRI,count (A.DNI) FROM MATR_ASIGS_BASE_EEES a, UNED.GPOS_ASIG_CU
+RSO b WHERE  A.CURSO = B.CURSO -- AND  NVL(A.CONVO_MAT,'00') = B
+.CONVO_MAT  AND A.UNIV_ASIG = B.UNIV_ORIGEN  AND A.TIPO_ESTUDIOS
+_ASIG = B.TIPO_ESTUDIOS  AND A.COD_ASIG = B.COD_ASIG  AND A.ESTA
+
+         85,789            1       85,789.0    2.8    72.31     73.10 1181040761
+Module: TOAD 10.6.0.42
+SELECT '2012',A.UNIV_ASIG,A.TIPO_ESTUDIOS_ASIG, A.COD_ASIG,B.CUA
+TRI,B.convo_mat, count (A.DNI) FROM MATR_ASIGS_BASE_EEES a, UNED
+.GPOS_ASIG_CURSO b WHERE  A.CURSO = B.CURSO -- AND  NVL(A.CONVO_
+MAT,'00') = B.CONVO_MAT  AND A.UNIV_ASIG = B.UNIV_ORIGEN  AND A.
+TIPO_ESTUDIOS_ASIG = B.TIPO_ESTUDIOS  AND A.COD_ASIG = B.COD_ASI
+
+         85,771            1       85,771.0    2.8     6.28      6.24 4168903561
+Module: TOAD 10.6.0.42
+SELECT     ROWID, ID_MATRICULA, CURSO, CONVO_MAT,     DNI, TIPO_
+ESTUDIOS_ASIG, COD_ASIG,     ESTADO_ASIG, FEC_MODIF, CODCENTRO,
+    FECHA_MODIF, TIPO_ESTUDIOS_VIA, COD_VIA_ESTUDIO,     ESTADO,
+ BORRADOR, UNIV_MAT,     UNIV_ASIG, COD_PROGRAMA FROM EVACAL.MAT
+R_ASIGS_BASE_EEES Where CURSO = '2012'  AND COD_ASIG = '399042'
+
+         67,412            1       67,412.0    2.2     4.56      4.58  528949330
+Module: TOAD 10.6.0.42
+SELECT     ROWID, ID_MATRICULA, CURSO, CONVO_MAT,     DNI, TIPO_
+ESTUDIOS_ASIG, COD_ASIG,     ESTADO_ASIG, FEC_MODIF, CODCENTRO,
+SQL ordered by Reads for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Disk Reads Threshold:      1000
+
+                                                     CPU      Elapsd
+ Physical Reads  Executions  Reads per Exec %Total Time (s)  Time (s) Hash Value
+--------------- ------------ -------------- ------ -------- --------- ----------
+
+          -------------------------------------------------------------
+SQL ordered by Executions for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Executions Threshold:       100
+
+                                                CPU per    Elap per
+ Executions   Rows Processed   Rows per Exec    Exec (s)   Exec (s)  Hash Value
+------------ --------------- ---------------- ----------- ---------- ----------
+  37,715,051      11,600,902              0.3       0.00        0.00 1743952982
+Module: OC4J_Guias.default_island.1
+SELECT 'S' FROM PERSONAS_FUNCION WHERE ID_PF = :B3 AND NVL(CURSO
+,:B2 ) = :B2 AND NVL(FEC_COMIENZO,TO_DATE('01/01/1001','DD/MM/YY
+YY')) <= :B1 AND NVL(FEC_CESE,TO_DATE('31/12/2999','DD/MM/YYYY')
+) >= :B1
+
+   6,679,823       6,679,827              1.0       0.00        0.00 1881291200
+Module: dllhost.exe
+SELECT MAX(CURACA) FROM RM_FECHAS
+
+   2,411,118               0              0.0       0.00        0.00 4004954344
+Module: oracle@ocudb.uned.es (TNS V1-V3)
+SELECT "ID_CONTENIDO","TIPO_ESTUDIOS","COD_ASIG" FROM "UNED"."CO
+NTENIDOS" "C" WHERE :1="TIPO_ESTUDIOS"||"COD_ASIG" AND :2="ID_CO
+NTENIDO"
+
+   1,758,282       1,503,148              0.9       0.00        0.00 2605836727
+Module: dllhost.exe
+SELECT DISTINCT '03' FROM POSGRADO_PRO.MATRI M, POSGRADO_PRO.MAT
+RI_COMPLE MC WHERE M.ID_MATRICULA = :B1 AND M.ID_MATRICULA = MC.
+ID_MATRICULA (+) AND (M.ESTADO = 'C' OR M.CEN_MODIF <> 'ALUM' OR
+ (MC.CODIGO_DATO = 3 AND MC.VALOR_DATO = 'S'))
+
+   1,503,479             670              0.0       0.00        0.00 1393666712
+Module: dllhost.exe
+SELECT null AS motivos FROM dual
+
+     721,430         721,430              1.0       0.00        0.00 3490320335
+Module: dllhost.exe
+SELECT DOMINGOS FROM PLANES_EXAMENES PE WHERE PE.PLANEXA = :B2 A
+ND PE.TIPO_ESTUDIOS=:B1
+
+     705,881         705,881              1.0       0.00        0.00 3826842081
+SELECT ESTADO FROM SOLICITUDES S WHERE S.ID_SOLICITUD=:B1
+
+     705,818         705,818              1.0       0.00        0.00 2819471504
+SELECT SE.ID_ESTADO || '|' || SE.NOMBRE_ESTADO FROM SOLIC_ESTADO
+S SE WHERE SE.ID_ESTADO=:B1
+
+     654,257         654,249              1.0       0.00        0.00 3350351449
+Module: dllhost.exe
+SELECT fec_comienzo_exaJ FROM fechas_exa               WHERE cur
+so = :p_curso
+
+     646,601         635,324              1.0       0.00        0.00   73847331
+Module: dllhost.exe
+SELECT DISTINCT LP.ACTIVO FROM LOG_PROCEDIMIENTOS LP WHERE LP.PR
+OCEDIMIENTO = LOWER(:B1 )
+
+     638,502         638,502              1.0       0.00        0.00 1342982499
+SELECT S.TIPO_SOLICITUD FROM SOLICITUDES S WHERE S.ID_SOLICITUD=
+:B1
+
+SQL ordered by Executions for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Executions Threshold:       100
+
+                                                CPU per    Elap per
+ Executions   Rows Processed   Rows per Exec    Exec (s)   Exec (s)  Hash Value
+------------ --------------- ---------------- ----------- ---------- ----------
+     638,129         638,129              1.0       0.00        0.00 1456951031
+SELECT COUNT(TSD.ID_DOCUMENTO) FROM POSGRADO_PRO.TIPOS_SOLICITUD
+_DOCUMENTOS TSD WHERE TSD.COD_TIPO_SOLICITUD=:B1
+
+     638,129         638,129              1.0       0.00        0.00 1544093524
+SELECT COUNT(DISTINCT ED.ID_DOCUMENTO) FROM MATRICULAS.ENVIO_DOC
+UMENTOS ED, POSGRADO_PRO.TIPOS_SOLICITUD_DOCUMENTOS TSD WHERE ED
+.PROCESO_ACADEMICO='SL' AND ED.ID_SOL_PROCESO=:B2 AND TSD.COD_TI
+PO_SOLICITUD=:B1 AND ED.ID_DOCUMENTO=TSD.ID_DOCUMENTO
+
+     638,129         638,129              1.0       0.00        0.00 1879991605
+SELECT TIPO_SOLICITUD FROM POSGRADO_PRO.SOLICITUDES S WHERE S.ID
+_SOLICITUD=:B1
+
+     638,129          94,492              0.1       0.00        0.00 4001168352
+SELECT DISTINCT 'S' FROM MATRICULAS.ENVIO_DOCUMENTOS ED WHERE ED
+.ID_SOL_PROCESO=:B1 AND ED.PROCESO_ACADEMICO='SL' AND ED.ID_DOCU
+MENTO=42 AND ED.FEC_IMPRESION IS NOT NULL AND ROWNUM < 2
+
+     637,798         138,518              0.2       0.00        0.00 1777469345
+SELECT DISTINCT 'S' FROM POSGRADO_PRO.SOLIC_REPAROS SR WHERE SR.
+ID_SOLICITUD=:B1
+
+     631,552              99              0.0       0.00        0.00 4113447279
+Module: dllhost.exe
+SELECT SG.DOCU_GESTOR, PER.APELLIDO1 || ' ' || NVL(PER.APELLIDO2
+,' ') || ', ' || PER.NOMBRE AS NOM_GESTOR FROM POSGRADO_PRO.SOLI
+C_GESTORES SG , FECHASEXA.PERSONAL PER WHERE SG.PROCESO_ACADEMIC
+O = 'MP' AND SG.ID_SOLICITUD = :B1 AND PER.DOCU =SG.DOCU_GESTOR
+AND PER.PAIS_DOCU = SG.PAIS_DOCU_GESTOR ORDER BY SG.FEC_MODIF DE
+
+     614,033         614,076              1.0       0.00        0.00 3588513883
+SELECT SYSTIMESTAMP FROM SYS.DUAL
+
+     339,378         339,378              1.0       0.00        0.00 2808497080
+Module: w3wp.exe
+SELECT DECODE(APELLIDO1,NULL,DECODE(APELLIDO2,NULL,'',APELLIDO2|
+|', ' ),DECODE(APELLIDO2,NULL,APELLIDO1 ||', ',APELLIDO1 || ' '
+|| APELLIDO2||', ' )) || NOMBRE FROM BENEFICIARIOS B WHERE B.ID_
+BENEFICIARIO = :B1
+
+     312,166         312,160              1.0       0.00        0.00  430943973
+Module: w3wp.exe
+SELECT LIT_SESION FROM SESIONES WHERE SESION = :B1
+
+     312,148         336,041              1.1       0.00        0.00 2984358578
+Module: w3wp.exe
+SELECT ASIGNA FROM ASIGS_EXA WHERE TIPO_ESTUDIOS = :B2 AND ID_EX
+AMEN = :B1
+
+     311,275         311,275              1.0       0.00        0.00 3716207873
+update seq$ set increment$=:2,minvalue=:3,maxvalue=:4,cycle#=:5,
+order$=:6,cache=:7,highwater=:8,audit$=:9,flags=:10 where obj#=:
+1
+SQL ordered by Executions for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Executions Threshold:       100
+
+                                                CPU per    Elap per
+ Executions   Rows Processed   Rows per Exec    Exec (s)   Exec (s)  Hash Value
+------------ --------------- ---------------- ----------- ---------- ----------
+
+     254,324               0              0.0       0.00        0.00 2763821592
+Module: dllhost.exe
+SELECT NULL AS MOTIVOS FROM DUAL
+
+     244,938         244,938              1.0       0.00        0.00  564923025
+INSERT INTO LOG_PROCESOS(PROCEDIMIENTO, FEC_INI, FEC_FIN, DURACI
+ON, CAMPO_ID,VALOR_ID, PARAMETROS_E, PARAMETROS_S, ERRCODE, LITE
+RR, TIPOERR) VALUES ( SUBSTR(:B11 ,1, 200) , :B10 , :B9 , :B8 ,
+SUBSTR(:B7 ,1,50), SUBSTR(:B6 ,1,100), SUBSTR(:B5 ,1,4000), SUBS
+TR(:B4 ,1,4000), :B3 , SUBSTR(:B2 ,1,1000) , :B1 )
+
+     244,927         244,928              1.0       0.00        0.00 2521295827
+SELECT SEQ_LOG_PROCESOS.NEXTVAL FROM DUAL
+
+     204,521         204,521              1.0       0.00        0.00   72271902
+INSERT INTO EMAIL_ALUMNOS (EMAIL) VALUES (:B1 )
+
+     189,696         189,696              1.0       0.00        0.00 3615628709
+Module: TOAD 11.6.1.6
+INSERT INTO CENSO_ALUMNOS_RECTOR_2013 (DNI, COD_CENTRO,NOM_CENTR
+O,APELLIDO1,APELLIDO2,NOMBRE, NOMBRE_COMPLETO, IDENTIFICADOR,COR
+REO_UNED) VALUES (:B9 , :B8 , :B7 , :B6 , :B5 ,:B4 , :B3 ,:B2 ,
+
+          -------------------------------------------------------------
+SQL ordered by Parse Calls for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Parse Calls Threshold:      1000
+
+                           % Total
+ Parse Calls  Executions   Parses  Hash Value
+------------ ------------ -------- ----------
+   1,503,479    1,503,479    25.20 1393666712
+Module: dllhost.exe
+SELECT null AS motivos FROM dual
+
+     654,257      654,257    10.96 3350351449
+Module: dllhost.exe
+SELECT fec_comienzo_exaJ FROM fechas_exa               WHERE cur
+so = :p_curso
+
+     311,275      311,275     5.22 3716207873
+update seq$ set increment$=:2,minvalue=:3,maxvalue=:4,cycle#=:5,
+order$=:6,cache=:7,highwater=:8,audit$=:9,flags=:10 where obj#=:
+1
+
+     254,326      254,324     4.26 2763821592
+Module: dllhost.exe
+SELECT NULL AS MOTIVOS FROM DUAL
+
+     159,384      159,642     2.67 2403185938
+SELECT USER FROM SYS.DUAL
+
+      68,818       68,816     1.15 3691727625
+BEGIN GUIAS_PRO.PKDBMS.DBMS_APPLICATION_INFO(:1,:2); END;
+
+      61,974       61,974     1.04  827003719
+Module: w3wp.exe
+SELECT MATASIG.TIPO_ESTUDIOS_ASIG TIPO_ESTUDIOS, TE.LIT_TIPO_EST
+UDIO FROM MATRICULAS.UVA_ASIGS_CURSOVIR MATASIG INNER JOIN UNED.
+TIPOS_ESTUDIO TE ON TE.TIPO_ESTUDIO = MATASIG.TIPO_ESTUDIOS_ASIG
+ WHERE CURSO = :B2 AND MATASIG.DNI = :B1 GROUP BY MATASIG.TIPO_E
+STUDIOS_ASIG, TE.LIT_TIPO_ESTUDIO UNION SELECT POS.TIPO_ESTUDIOS
+
+      61,974       61,974     1.04 1253239962
+Module: w3wp.exe
+begin FECHASEXA.CALENDARIO.LeeTipoEstudiosAlumnos(i_sDniAlumno=>
+:i_sDniAlumno, i_sCurso=>:i_sCurso, o_sErrorCode=>:o_sErrorCode,
+ o_sErrorDesc=>:o_sErrorDesc, o_cursor=>:o_cursor); end;
+
+      58,000      614,033     0.97 3588513883
+SELECT SYSTIMESTAMP FROM SYS.DUAL
+
+      57,786       57,786     0.97 3678746251
+Module: TOAD 9.0.0.160
+SELECT TIPO_ESTUDIOS || ASIGNA FROM FECHASEXA.EXAMENES A, FECHAS
+EXA.ASIGS_EXA B WHERE B.ID_EXAMEN=A.ID_EXAMEN AND B.ID_EXAMEN=:B
+2 AND B.TIPO_ESTUDIOS=:B1
+
+      50,844       50,844     0.85 2237703889
+SELECT DISTINCT COD_VALOR_ENTIDAD CODIGO, NOM_VALOR_ENTIDAD NOMB
+RE FROM VALORES_SELEC_ENTIDADES, UNED.VALORES_ENTIDADES WHERE ID
+_USUARIO = :B2 AND COD_ENTIDAD = :B1 AND COD_VALOR_ENTIDAD = SUB
+STR(VALOR_SELEC,1,5)
+
+      38,215       38,215     0.64 1307778841
+SQL ordered by Parse Calls for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Parse Calls Threshold:      1000
+
+                           % Total
+ Parse Calls  Executions   Parses  Hash Value
+------------ ------------ -------- ----------
+select condition from cdef$ where rowid=:1
+
+      36,501       36,501     0.61 2168394855
+SELECT LOWER(A.NOMBRE || '@' || A.DOMINIO) AS EMAILPERSONALES FR
+OM EMAIL A, PERSONAS B WHERE A.ID_PERSONA=B.ID_PERSONA AND A.ID_
+TIPODIRECCION=1 AND B.DNI=:B1
+
+      34,856       34,856     0.58  417326697
+Module: w3wp.exe
+SELECT fec_comienzo_exaF FROM fechas_exa               WHERE cur
+so = :p_curso
+
+      34,329       34,329     0.58 3711104381
+Module: dllhost.exe
+SELECT CODIGO, NOMBRE, RANGO1, RANGO2 FROM AUX_PERENT WHERE ID_A
+UX_PE = :B1
+
+      33,566       33,566     0.56 2189977303
+Module: dllhost.exe
+BEGIN MATRICULAS.PK_POSGRADO.LISTA_MATRICULAS_DNI( :1, :2, :P_CU
+RSOR ); END;
+
+      33,550       33,550     0.56 4007509394
+Module: dllhost.exe
+BEGIN MATRICULAS.PK_POSGRADO.LISTA_EXPEDIENTES_DNI( :1, :2, :P_C
+URSOR ); END;
+
+      33,550       33,550     0.56 4183534846
+Module: dllhost.exe
+SELECT 'MATRI' AS TIPO, MAX(M.CURSO) AS CURSO, MAX(M.ID_MATRICUL
+A) AS ID_MATRICULA, M.TIPO_ESTUDIOS, GP.NOM_PROGRAMA ,GP.COD_PRO
+GRAMA, POSGRADO_PRO.PK_GPOS_REC_MATRICULA.OBTENER_NUM_EXPEDIENTE
+(M.DNI,M.TIPO_ESTUDIOS,GP.COD_PROGRAMA) NUM_EXPEDIENTE FROM POSG
+RADO_PRO.MATRI M, UNED.GPOS_VIAS_ESTUDIO GVE, UNED.GPOS_PROGRAMA
+
+      32,672       32,672     0.55 2329396959
+Module: dllhost.exe
+SELECT 'MATRI' AS TIPO,M.DNI, M.ID_MATRICULA,M.CURSO, M.CONVO_MA
+T, M.TIPO_ESTUDIOS, M.COD_VIA_ESTUDIO, GP.NOM_PROGRAMA , GP.COD_
+PROGRAMA , CONVM.NOM_CONVO_MAT, GP.UNIV AS UNIV,M.ESTADO , DECOD
+E (M.ESTADO,'A','ANULADA', 'P', 'PENDIENTE', 'C', 'CONFIRMADA','
+') AS NOM_ESTADO, POSGRADO_PRO.PK_ACCESOS.ACCESO_MATRICULA_ALUMN
+
+      32,317       32,317     0.54  721946928
+Module: dllhost.exe
+SELECT fec_comienzo_exaS FROM fechas_exa               WHERE cur
+so = :p_curso
+
+      29,473       29,473     0.49 1143785792
+Module: OC4J_Guias.default_island.1
+SELECT DISTINCT TIPO_ESTUDIOS || COD_PROGRAMA CODIGO, NOM_PROGRA
+MA NOMBRE FROM VALORES_SELEC_ENTIDADES, UNED.GPOS_PROGRAMAS WHER
+E ID_USUARIO = :B1 AND UNIV = '028' AND TIPO_ESTUDIOS = SUBSTR(V
+ALOR_SELEC,1,2) AND COD_PROGRAMA = SUBSTR(VALOR_SELEC,3,2)
+SQL ordered by Parse Calls for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Parse Calls Threshold:      1000
+
+                           % Total
+ Parse Calls  Executions   Parses  Hash Value
+------------ ------------ -------- ----------
+
+      24,061       24,061     0.40 2992808457
+BEGIN PKBUSCAALUMNO.ASIGNATURA_DEPARTAMENTO(:1,:2); END;
+
+      24,021       24,021     0.40  677256758
+Module: OC4J_Guias.default_island.1
+SELECT DISTINCT DNI, NOMBRE, APE1, APE2,COD_DEPARTAMENTO, ORDEN
+FROM FECHASEXA.GRAD_EQUIPOS_DOCENTES WHERE ASIGNA = SUBSTR(:B2 ,
+3,8) AND TIPO_ESTUDIOS=SUBSTR(:B2 ,0,2) AND CURSO = :B1 ORDER BY
+ ORDEN ASC
+
+      24,018       24,018     0.40 3685808097
+Module: OC4J_Guias.default_island.1
+BEGIN GUIAS_PRO.PKFUNCIONESDOCENTES_GRADO.recuperarEquipoDocente
+(:1,:2,:3); END;
+
+      23,913       23,913     0.40 2354793618
+Module: dllhost.exe
+SELECT A.DOCU_ALUMNO AS DNI, A.NOMBRE,A.APELLIDO1, A.APELLIDO2,
+A.SEXO, A.DOCU AS DOCU_ORIGINAL,A.PAIS_DOCU, '02' AS TIPO_USUARI
+O ,B.EMAIL AS EMAIL, NULL AS COD_CENTRO_PENIN, NULL AS TIPO_DOCU
+ FROM PERSONAL A, PERSONAS_EMAIL B WHERE A.DOCU= B.DOCU AND A.PA
+
+          -------------------------------------------------------------
+SQL ordered by Sharable Memory for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Sharable Memory Threshold:   1048576
+
+Sharable Mem (b)  Executions  % Total  Hash Value
+---------------- ------------ ------- ------------
+      41,160,970          507     1.6   2589848034
+Module: OC4J_Criticos.third_island.1
+UPDATE DATPER SET APE1 = DECODE(:B48 , 'S', UPPER(:B101 ), APE1)
+, APE2 = DECODE(:B47 , 'S', UPPER(:B100 ), APE2), NOMBRE = DECOD
+E(:B46 , 'S', UPPER(:B99 ), NOMBRE), VIA = DECODE(:B45 , 'S', :B
+98 , VIA), DIRECCION = DECODE(:B44 , 'S', UPPER(:B97 ), DIRECCIO
+N), LOCALIDAD = DECODE(:B43 , 'S', UPPER(:B96 ), LOCALIDAD), CPO
+
+      13,759,966          366     0.5   2369411689
+Module: dllhost.exe
+SELECT /*+ MERGE (VRF) */ CC.ID_MATRICULA, CC.CREDITOS, CC.COD_M
+AT_RC, 'CRÉDITOS DE ' || GN.NOM_NIVEL AS NOM_MAT_RC, CC.N_ORDEN,
+ VRF.* , ROUND(CALIFCC.NOTA_NUM,1) AS NOTA_NUM, NA.LITERAL_MOSTR
+ADO AS NOTA_ALF , (SELECT COUNT(*) AS NUM_REG FROM POSGRADO_PRO.
+V_RECONOCIDOS_F VRF2 WHERE VRF2.GRUPO_RECONOCIMIENTO = ARD.GRUPO
+
+       7,133,893            5     0.3   4264955138
+Module: dllhost.exe
+SELECT /*+ MERGE (VRF) */ CC.ID_MATRICULA, CC.CREDITOS, CC.COD_M
+AT_RC, 'CRÉDITOS DE ' || GN.NOM_NIVEL AS NOM_MAT_RC, CC.N_ORDEN,
+ VRF.GRUPO_RECONOCIMIENTO, COD_TIPO_ORIGEN, NOM_TIPO_ORIGEN, COD
+_VALOR, NOM_VALOR, COD_CUANTIFICACION, NOM_CUANTIFICACION, VALOR
+_CUANTIFICACION, COD_ENTIDAD1_SUPERA, NOM_ENTIDAD1_SUPERA, VALOR
+
+       6,810,301          379     0.3   1181098680
+Module: dllhost.exe
+INSERT INTO PAGOS VALUES( NULL, :B21 , :B20 , :B19 , :B18 , :B17
+ , :B16 , :B15 , :B14 , :B13 , :B12 , :B11 , :B10 , :B9 , NULL,
+NULL, :B8 , :B2 , NULL, :B7 , :B6 , :B5 , NULL, NULL, NULL, NULL
+, :B4 , :B3 , NULL, NULL, DECODE(:B2 ,'4',:B1 ,NULL), NULL, NULL
+, NULL )
+
+       6,597,334          659     0.3   1415261285
+Module: dllhost.exe
+SELECT /*+ MERGE (VRF) */ CC.ID_MATRICULA, CC.CREDITOS, CC.COD_M
+AT_RC, 'CRÉDITOS DE ' || GN.NOM_NIVEL AS NOM_MAT_RC, CC.N_ORDEN,
+ VRF.* , ROUND(CALIFCC.NOTA_NUM,1) AS NOTA_NUM, NA.LITERAL_MOSTR
+ADO AS NOTA_ALF , (SELECT COUNT(*) AS NUM_REG FROM POSGRADO_PRO.
+V_RECONOCIDOS_F VRF2 WHERE VRF2.GRUPO_RECONOCIMIENTO = ARD.GRUPO
+
+       6,003,036            2     0.2    388396077
+Module: w3wp.exe
+SELECT VA.ID_CA_CURACA, VA.ANYO_INICIO, VA.ANYO_FIN, VA.ID_CA_PR
+OGRAMA, VA.NOMBRE_PROGRAMA_CORTO, VA.NOMBRE_PROGRAMA, VA.ID_CA_A
+CTIVIDAD, VA.NOMBRE_ACTIVIDAD, VA.ANYO_FIN_EXTINGUIDO, VA.ID_OF_
+ESTADO_ACTIVIDAD, VA.NOMBRE_ESTADO_ACTIVIDAD, VA.ID_OF_BLOQUE, V
+A.NOMBRE_BLOQUE, VA.INSTITUCIONAL, VA.NOMBRE_INSTITUCION, VA.NUM
+
+       5,797,188        2,862     0.2   3565620021
+Module: w3wp.exe
+SELECT VAN.ID_CA_CURACA, CAA.ID_CA_ACTIVIDAD, VAN.NOMBRE_ACTIVID
+AD, CAA.ID_CA_PROGRAMA, CAA.NUMERO_CONVOCATORIA, CAA.FECHA_INICI
+O, CAA.FECHA_FIN, CAA.PUBLICO, CAA.MAXIMO_ESTUDIANTES, CAA.MINIM
+O_ESTUDIANTES, OFPV.NOMBRE AS NOMBRE_PLATAFORMA, VAN.NOMBRE_GEST
+ORA, VAN.NOMBRE_COLABORADORA, CAA.TRIPARTITA, CAA.INSTITUCIONAL,
+SQL ordered by Sharable Memory for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Sharable Memory Threshold:   1048576
+
+Sharable Mem (b)  Executions  % Total  Hash Value
+---------------- ------------ ------- ------------
+
+       5,696,060           47     0.2   1096843548
+Module: dllhost.exe
+SELECT STATUS,CDN ,DES_CARRERA|| DECODE(DES_SECCION,NULL,NULL,'
+* '||DES_SECCION)|| DECODE(DES_ESPECIALIDAD,NULL,NULL,' * '||DES
+_ESPECIALIDAD)|| DECODE(DES_SUBESPECIALIDAD,NULL,NULL,' * '||DES
+_SUBESPECIALIDAD) TITULACION, DECODE(STATUS ,'R','S','N') DISPON
+IBLE, DECODE (STATUS,'A',' aún tardará 10 meses en estar a su di
+
+       5,681,968        1,085     0.2    256687634
+SELECT VDE.COD_VALOR_ENTIDAD_D AS CODIGO, VDE.NOM_VALOR_ENTIDAD_
+D AS NOMBRE FROM UNED.VALORES_DEPENDENCIA_ENTIDADES VDE WHERE VD
+E.CURSO = UNED.CURSO_ACTUAL_DE_FECHA AND VDE.COD_ENTIDAD_M = :B3
+ AND VDE.COD_VALOR_ENTIDAD_M = :B2 AND VDE.COD_ENTIDAD_D = :B1 A
+ND ((VDE.RELACION_DEPENDENCIA = 'REC' ) OR (VDE.RELACION_DEPENDE
+
+       4,313,008          161     0.2    405465699
+Module: dllhost.exe
+BEGIN BECAS_PRO.PK_GES_SOL.GRABASOLMAS( :1, :2, :3, :4, :5, :6,
+:7, :8, :9, :10, :11, :12, :13, :14, :15, :16, :17, :18, :19, :2
+0, :21, :22, :23, :24, :25, :26, :27, :28, :29, :30, :31, :32, :
+33, :34, :35, :36, :37, :38, :39, :40, :41, :42 ); END;
+
+       4,197,232           42     0.2    500185285
+Module: w3wp.exe
+SELECT DISTINCT ID_CA_CURACA, ANYO_INICIO, ANYO_FIN, ANYO_FIN_EX
+TINGUIDO, ID_CA_PROGRAMA, NOMBRE_PROGRAMA_CORTO, NOMBRE_PROGRAMA
+, ID_CA_ACTIVIDAD, NOMBRE_ACTIVIDAD, ANYO_FIN_EXTINGUIDO, ID_OF_
+ESTADO_ACTIVIDAD, NOMBRE_ESTADO_ACTIVIDAD, VAN.ID_OF_BLOQUE, NOM
+BRE_BLOQUE, INSTITUCIONAL, NOMBRE_INSTITUCION, NUM_MODULOS, MODU
+
+       3,363,340        3,847     0.1    558638120
+Module: dllhost.exe
+SELECT VRF.* , DECODE(VRF.COD_TIPO_ORIGEN, '001', ( SELECT GA.CR
+EDITOS FROM UNED.GPOS_ASIGNATURAS GA WHERE GA.UNIV_ORIGEN = SUBS
+TR(VRF.COD_VALOR, 1, 3) AND GA.TIPO_ESTUDIOS =SUBSTR(VRF.COD_VAL
+OR, 4, 2) AND GA.COD_ASIG = SUBSTR(VRF.COD_VALOR, 6, 6)), NULL)
+AS CREDITOS_SUPERA , CAR2.NOTA_NUM AS CALIF, CAR2.NOTA_ALF AS CA
+
+       3,358,404           19     0.1    573236899
+Module: dllhost.exe
+SELECT DP.ID_PREINSCRIPCION AS ID_PREINSCRIPCION, D.COD_REPARO A
+S COD_REPARO, D.NOM_REPARO AS NOM_REPARO, DP.ID_DOCUMENTO AS ID_
+DOCUMENTO, NVL(DP.VALOR_ASOCIADO,' ') AS VALOR_ASOCIADO, DP.ESTA
+DO_REPARO AS ESTADO_REPARO, DP.ESTADO_PETICION AS ESTADO_PETICIO
+N, DP.GRUPO_PETICION AS GRUPO_PETICION, D.LITERAL_PETICION AS LI
+
+          -------------------------------------------------------------
+SQL ordered by Version Count for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Version Count Threshold:        20
+
+ Version
+   Count  Executions   Hash Value
+-------- ------------ ------------
+     457          507   2589848034
+Module: OC4J_Criticos.third_island.1
+UPDATE DATPER SET APE1 = DECODE(:B48 , 'S', UPPER(:B101 ), APE1)
+, APE2 = DECODE(:B47 , 'S', UPPER(:B100 ), APE2), NOMBRE = DECOD
+E(:B46 , 'S', UPPER(:B99 ), NOMBRE), VIA = DECODE(:B45 , 'S', :B
+98 , VIA), DIRECCION = DECODE(:B44 , 'S', UPPER(:B97 ), DIRECCIO
+N), LOCALIDAD = DECODE(:B43 , 'S', UPPER(:B96 ), LOCALIDAD), CPO
+
+     181          379   1181098680
+Module: dllhost.exe
+INSERT INTO PAGOS VALUES( NULL, :B21 , :B20 , :B19 , :B18 , :B17
+ , :B16 , :B15 , :B14 , :B13 , :B12 , :B11 , :B10 , :B9 , NULL,
+NULL, :B8 , :B2 , NULL, :B7 , :B6 , :B5 , NULL, NULL, NULL, NULL
+, :B4 , :B3 , NULL, NULL, DECODE(:B2 ,'4',:B1 ,NULL), NULL, NULL
+, NULL )
+
+     170           47   1096843548
+Module: dllhost.exe
+SELECT STATUS,CDN ,DES_CARRERA|| DECODE(DES_SECCION,NULL,NULL,'
+* '||DES_SECCION)|| DECODE(DES_ESPECIALIDAD,NULL,NULL,' * '||DES
+_ESPECIALIDAD)|| DECODE(DES_SUBESPECIALIDAD,NULL,NULL,' * '||DES
+_SUBESPECIALIDAD) TITULACION, DECODE(STATUS ,'R','S','N') DISPON
+IBLE, DECODE (STATUS,'A',' aún tardará 10 meses en estar a su di
+
+      92          161    405465699
+Module: dllhost.exe
+BEGIN BECAS_PRO.PK_GES_SOL.GRABASOLMAS( :1, :2, :3, :4, :5, :6,
+:7, :8, :9, :10, :11, :12, :13, :14, :15, :16, :17, :18, :19, :2
+0, :21, :22, :23, :24, :25, :26, :27, :28, :29, :30, :31, :32, :
+33, :34, :35, :36, :37, :38, :39, :40, :41, :42 ); END;
+
+      68          106   3971226322
+Module: OC4J_Criticos.third_island.1
+SELECT NOM_MASTER FROM UNED.POS_MASTER WHERE TIPO_ESTUDIOS=SUBST
+R(:B1 ,1,2) AND COD_PROGRAMA=SUBSTR(:B1 ,3,2) AND COD_MASTER=SUB
+STR(:B1 ,5,2)
+
+      67       73,173    297246876
+Module: dllhost.exe
+SELECT 'S' FROM REVIMATRI.USUARIOS_OID UO, PERMISOS_COLECTIVOS P
+C WHERE IDENTIFICADOR = :B2 AND COLECTIVO = 'ES' AND COD_PERMISO
+ = :B1
+
+      65       10,553    665026281
+Module: OC4J_Guias.default_island.1
+SELECT CODIGO_GUIA, COD_TITULACION, CURSO_ACADEMICO, USUARIO, FE
+C_MODIFICACION, ESTADO FROM GUIAS_PRO.GUIAS_CURSO_TIT A WHERE ES
+TADO = 'APROBADO' AND COD_TITULACION = :B2 AND CURSO_ACADEMICO =
+ :B1
+
+      63       61,267   2562682833
+Module: dllhost.exe
+SELECT 'S' FROM UNED.COORDINADORESCC C, UNED.COORDINADORESCC_ACT
+IVOS CA, PERMISOS_COLECTIVOS PC, UNED.CENTROS_GENERICOS CG WHERE
+SQL ordered by Version Count for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Version Count Threshold:        20
+
+ Version
+   Count  Executions   Hash Value
+-------- ------------ ------------
+ C.IDENTIFICADOR = CA.IDENTIFICADOR AND CURACA = :B3 AND SUBSTR(
+CA.CODCEN,1,3) = CG.COD_CENGEN AND CLASE <> '04' AND COLECTIVO =
+ 'CE' AND COD_PERMISO = :B2 AND (C.IDENTIFICADOR = :B1 OR C.EMAI
+
+      63       61,265   3389056745
+Module: dllhost.exe
+SELECT 'S' FROM UNED.COORDINADORESCC C, UNED.COORDINADORESCC_ACT
+IVOS CA, PERMISOS_COLECTIVOS PC, UNED.CENTROS_GENERICOS CG WHERE
+ C.IDENTIFICADOR = CA.IDENTIFICADOR AND CURACA = :B3 AND SUBSTR(
+CA.CODCEN,1,3) = CG.COD_CENGEN AND CLASE = '04' AND COLECTIVO =
+'CP' AND COD_PERMISO = :B2 AND (C.IDENTIFICADOR = :B1 OR C.EMAIL
+
+      55          423   2650350866
+BEGIN MATRICULAS.PK_DATPER_TIT.Actualizar_datper_titulaciones(P_
+DNI=>:1,P_ID_TITULACION=>:2,P_TITULACION=>:3,P_FINALIZADA=>:4,CA
+MBIO_FINALIZADA=>:5,P_TIT_ACCESO=>:6,CAMBIO_TIT_ACCESO=>:7,P_UNI
+V=>:8,CAMBIO_UNIV=>:9,P_CENTRO_UNIV=>:10,CAMBIO_CENTRO_UNIV=>:11
+,P_SECUEN_CENTRO_UNIV=>:12,CAMBIO_SECUEN_CENTRO_UNIV=>:13,P_CENT
+
+      52      185,520   1909212226
+Module: OC4J_Guias.default_island.1
+SELECT EMAIL FROM PERSONAS_EMAIL WHERE ID_EMAIL = :B1
+
+      50       59,389   4194808163
+Module: dllhost.exe
+SELECT DISTINCT 'S' FROM PERMISOS_USUARIOS PU, PERSONAS_EMAIL PE
+ WHERE PU.COD_PERMISO = :B2 AND PU.DOCU = PE.DOCU AND PU.PAIS_DO
+CU = PE.PAIS_DOCU AND PE.EMAIL = :B1 AND FUNCION_DEPENDIENTE IS
+NULL AND ENTIDAD_DEPENDIENTE IS NULL AND VALOR_ENTIDAD_DEP IS NU
+LL
+
+      49        6,760    622655084
+Module: dllhost.exe
+SELECT DISTINCT 'S' FROM PERSONAS_FUNCION_PR P, PERSONAS_EMAIL P
+E WHERE EMAIL = :B2 AND PE.DOCU = P.DOCU AND PE.PAIS_DOCU = P.PA
+IS_DOCU AND COD_FUNCION = :B1
+
+      47        6,087   1081664706
+Module: OC4J_Guias.default_island.1
+SELECT CODIGO_GUIA, COD_ASIGNATURA, CURSO_ACADEMICO, USUARIO, FE
+C_MODIFICACION, ESTADO FROM GUIAS_PRO.GUIAS_CURSO A WHERE ESTADO
+ = 'APROBADO' AND COD_ASIGNATURA = :B2 AND CURSO_ACADEMICO = :B1
+
+
+      47            4   2245206294
+Module: OC4J_Generales.second_island.1
+SELECT A.COD_PERSONA, B.NIF, B.NOMBRE, B.APELLIDO1, B.APELLIDO2,
+DPTO, '' AS TELEFONO, UPPER(B.DES_CENTRO_DESTINO) AS DES_CENTRO_
+DESTINO, UPPER(B.DES_DEPARTAMENTO) AS DES_UNIDAD,'' AS DES_SUBUN
+IDAD, UPPER(B.DES1_CCE) AS DES1_CCE FROM UBICACION_EMP A, V_DOCE
+NTECORREO B,TELEFONOS C WHERE C.NIF(+)=B.NIF AND (A.F_HASTA IS N
+
+      46        5,787   1763750484
+Module: OC4J_Grados.second_island.1
+SQL ordered by Version Count for DB: ORC5  Instance: orc5  Snaps: 5414 -5417
+-> End Version Count Threshold:        20
+
+ Version
+   Count  Executions   Hash Value
+-------- ------------ ------------
+INSERT INTO TMP_LOG(PROCEDIMIENTO, PASO, VALOR, FECHA) VALUES (
+SUBSTR(:B3 ,1, 200) , SUBSTR(:B2 ,1,50), SUBSTR(:B1 ,1,4000), SY
