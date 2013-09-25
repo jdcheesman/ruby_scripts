@@ -17,9 +17,15 @@ class LogError
 
     def set_error_code(description)
         if description =~ /^ORA/
-            dd = description.split(':')
-            @code = dd[0]
-            @description = dd[1]
+            if description =~/[:]/
+                dd = description.split(':')
+                @code = dd[0]
+                @description = dd[1]
+            else
+                slicedCode = /^(ORA\-[0-9]+) ([\w\W]+)$/.match(description)
+                @code = slicedCode[1]
+                @description = slicedCode[2]
+            end
         else
             @code = "-"
         end

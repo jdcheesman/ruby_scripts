@@ -119,6 +119,7 @@ class ProcParser
 
                 if line =~/\[ERROR\]/
                     le = LogError.new(lineData[TIME_SLICE], lineData[PLSQL_SLICE], lineData[JAVA_ID_SLICE], normalisedTime)
+                    #puts line
                     if le.same?(previouserror)
                         @errors.pop
                         le.code = previouserror.code

@@ -26,19 +26,19 @@ class OutputWriter
     def set_titles_llamadas(sheet)
         sheet.add_row([
             "Nombre proc",
-            "Num Llamadas",
-            "Total (ms)",
-            "Medio (ms)",
-            "Peor (ms)",
-            "Mejor (ms)",
+            "Llamadas\n(dia)",
+            "Peor\n(dia) (ms)",
+            "Medio\n(dia) (ms)",
+            "Mejor\n(dia) (ms)",
+            "Llamadas\n(sem)",
+            "Peor\n(sem) (ms)",
+            "Medio\n(sem) (ms)",
+            "Mejor\n(sem) (ms)",
+            "Cambio",
             "ID Peor Llamada",
             "Param_E Peor Llamada",
             "Param_S Peor Llamada",
             "Hora Peor Llamada",
-            "ID Mejor Llamada",
-            "Param_E Mejor Llamada",
-            "Param_S Mejor Llamada",
-            "Hora Mejor Llamada",
             "Fecha"])
     end
 
@@ -46,32 +46,21 @@ class OutputWriter
     def add_node_data_llamadas(data, sheet)
         data.each_key do |key|
             proc = data[key]
-            avg = (proc.totaltime*1.0) / (proc.calls*1.0)
-            if proc.plSqlData_worst != nil
-                data_worst = proc.plSqlData_worst.split('#')
-            else
-                data_worst = Array[]
-            end
-            if proc.plSqlData_best != nil
-                data_best = proc.plSqlData_best.split('#')
-            else
-                data_best = Array[]
-            end
             sheet.add_row([
                 proc.name,
-                proc.calls,
-                proc.totaltime,
-                avg,
-                proc.worst,
-                proc.best,
-                data_worst[0],
-                data_worst[1],
-                data_worst[2],
+                proc.calls.to_i,
+                proc.worst.to_i,
+                proc.avg.to_f,
+                proc.best.chomp.strip.to_i,
+                proc.calls_wk.to_i,
+                proc.worst_wk.to_i,
+                proc.avg_wk.to_f,
+                proc.best_wk.to_i,
+                proc.percent_change.gsub(/\./, ',').chomp.strip,
+                proc.id_worst,
+                proc.plSqlData_worst_E,
+                proc.plSqlData_worst_S,
                 proc.worst_time,
-                data_best[0],
-                data_best[1],
-                data_best[2],
-                proc.best_time,
                 @filedate
                 ])
         end
